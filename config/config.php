@@ -1,15 +1,22 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$isLocal = getenv('APP_ENV') === 'local';
 
 return [
     'mysql' => [
-        'host' => getenv('MYSQL_HOST') ?: 'sql101.infinityfree.com',
-        'port' => (int) (getenv('MYSQL_PORT') ?: 3306),
-        'database' => getenv('MYSQL_DB') ?: 'if0_40414526_db_bannhaccu',
-        'user' => getenv('MYSQL_USER') ?: 'if0_40414526',
-        'pass' => getenv('MYSQL_PASS') ?: 'iemcbz3MSF',
+        'host' => $isLocal ? getenv('MYSQL_HOST') : getenv('MYSQL_HOST_PROD'),
+        'database' => $isLocal ? getenv('MYSQL_DB') : getenv('MYSQL_DB_PROD'),
+        'user' => $isLocal ? getenv('MYSQL_USER') : getenv('MYSQL_USER_PROD'),
+        'pass' => $isLocal ? getenv('MYSQL_PASS') : getenv('MYSQL_PASS_PROD'),
         'charset' => 'utf8mb4',
     ],
     'app' => [
-        'base_url' => 'https://dh52200473.infinityfreeapp.com',          
+        'base_url' => $isLocal ? getenv('BASE_URL_LOCAL') : getenv('BASE_URL_PROD'),
     ],
 ];
