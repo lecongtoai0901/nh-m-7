@@ -13,6 +13,7 @@ $dsn = "mysql:host={$db['host']};dbname={$db['dbname']};charset={$db['charset']}
 global $isConnected;
 $isConnected = false;
 try {
+    global $pdo;
     $pdo = new PDO($dsn, $db['user'], $db['pass'], [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
     ]);
