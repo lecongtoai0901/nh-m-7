@@ -14,7 +14,7 @@ $router = new Router();
 global $baseUrl;
 $baseUrl = rtrim(dirname($_SERVER['SCRIPT_NAME']), '/');
 
-$router->add('GET', "$baseUrl/home", function ()  {
+$router->add('GET', "$baseUrl/", function ()  {
     $controller = new HomeController();
     return $controller->index();
 });
