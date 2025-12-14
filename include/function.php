@@ -16,3 +16,10 @@ function requestIndex($index, $value='')
 	$data = isset($_REQUEST[$index])? $_REQUEST[$index]:$value;
 	return $data;
 }
+
+function input($index, $value = '')
+{
+    if (isset($_POST[$index])) return $_POST[$index];
+    if (isset($_GET[$index]))  return $_GET[$index];
+    return $value;
+}

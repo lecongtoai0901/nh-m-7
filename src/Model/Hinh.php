@@ -46,4 +46,17 @@ class Hinh
         } catch (\Exception) {}
         return count($items) > 0 ? $items : [];
     }
+
+    public static function getByProductId($pdo, $id){
+        $items = [];
+        try {
+            $query = "SELECT ma_hinh, ma_sp, tenhinh FROM hinh WHERE ma_sp = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['id' => $id]);
+            while ($row = $stmt->fetch()) {
+                $items[] = new self($row['ma_hinh'], $row['ma_sp'], $row['tenhinh'] ?? '');
+            }
+        } catch (\Exception) {}
+        return count($items) > 0 ? $items : [];
+    }
 }

@@ -1,18 +1,38 @@
 <?php
 namespace App\Controller;
+require_once __DIR__ . '/../../include/function.php';
+global $pdo;
+$pdo = require __DIR__ . '/../../config/config.php';
 
+use App\Model\DanhGia;
 use App\Model\Product;
 use App\Model\Hinh;
+use App\Model\NguoiDung;
+use App\Model\NhaSanXuat;
 
 class SanPhamController
 {
     public function index()
     {
-        $pdo = require __DIR__ . '/../../config/config.php';
-        $products = Product::getAll($pdo);
+        global $pdo;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        $hienthi = 8;
+        
+        $tongsp = Product::countAll($pdo);
+        $tongtrang = $tongsp > 0 ? (int)ceil($tongsp / $hienthi) : 1;
+        if ($page > $tongtrang) $page = $tongtrang;
+        $offset = ($page - 1) * $hienthi;
+        $products = Product::getPage($pdo, $hienthi, $offset);
         $hinhList = Hinh::getAll($pdo);
 
-        $content = $this->view('sanpham.php', ['products' => $products, 'hinhList' => $hinhList]);
+        $content = $this->view('sanpham.php', [
+            'products' => $products,
+            'hinhList' => $hinhList,
+            'tranghientai' => $page,
+            'tongtrang' => $tongtrang,
+            'hienthi' => $hienthi,
+        ]);
 
         $contentZ = $this->render('sanpham_layout.php', ['content' => $content]);
 
@@ -21,7 +41,33 @@ class SanPhamController
 
     public function chiTietSP($id)
     {
-        echo 'Chi tiết sản phẩm có mã: ' . htmlspecialchars($id);
+        global $pdo;
+        $sp = Product::getById($pdo, $id);
+        if ($sp == null) {
+            $content = $this->render('sanpham_layout.php', ['content' => 'Sản phẩm không tồn tại.']);
+            return $this->render('main_layout.php', ['content' => $content]);
+        }
+        $dsHinh = Hinh::getByProductId($pdo, $id);
+        $dsdg = DanhGia::getByProductId($pdo, $id);
+        $relatedProducts = Product::getRelatedProducts($pdo, $sp->ma_loai, $sp->ma_sp, 4);
+        $dsnx = NhaSanXuat::getAll($pdo);
+        $dskh = NguoiDung::getAll($pdo);
+        $relatedHinh = [];
+        foreach ($relatedProducts as $rp) {
+            $imgs = Hinh::getByProductId($pdo, $rp->ma_sp);
+            $relatedHinh[$rp->ma_sp] = $imgs;
+        }
+        $content = $this->view('chitiet.php', [
+            'sp' => $sp,
+            'dsHinh' => $dsHinh,
+            'dsdg' => $dsdg,
+            'relatedProducts' => $relatedProducts,
+            'relatedHinh' => $relatedHinh,
+            'dsnx' => $dsnx,
+            'dskh' => $dskh,
+        ]);
+        $contentZ = $this->render('sanpham_layout.php', ['content' => $content]);
+        return $this->render('main_layout.php', ['content'=> $contentZ]);
     }
 
     private function view($view, $data = [])

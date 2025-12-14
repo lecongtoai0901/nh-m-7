@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: sql101.infinityfree.com
--- Thời gian đã tạo: Th12 02, 2025 lúc 12:21 AM
+-- Thời gian đã tạo: Th12 14, 2025 lúc 02:09 AM
 -- Phiên bản máy phục vụ: 11.4.7-MariaDB
 -- Phiên bản PHP: 7.2.22
 
@@ -150,11 +150,11 @@ CREATE TABLE `loai_san_pham` (
 --
 
 INSERT INTO `loai_san_pham` (`ma_loai`, `tenloai`, `mota`) VALUES
-('L01', 'Guitar', 'Các loại đàn guitar'),
-('L02', 'Piano', 'Đàn piano điện và cơ'),
-('L03', 'Sáo', 'Sáo trúc, sáo mèo và các loại sáo khác'),
-('L04', 'Trống', 'Trống điện tử, trống jazz'),
-('L05', 'Phụ kiện', 'Dây đàn, bao đàn, chân đàn...');
+('accessory', 'Phụ kiện', 'Dây đàn, bao đàn, chân đàn...'),
+('drum', 'Trống', 'Trống điện tử, trống jazz'),
+('flute', 'Sáo', 'Sáo trúc, sáo mèo và các loại sáo khác'),
+('guitar', 'Guitar', 'Các loại đàn guitar'),
+('piano', 'Piano', 'Đàn piano điện và cơ');
 
 -- --------------------------------------------------------
 
@@ -194,7 +194,6 @@ CREATE TABLE `nhan_vien` (
   `phai` tinyint(1) NOT NULL,
   `sdt` varchar(20) DEFAULT NULL,
   `email` varchar(100) NOT NULL,
-  `cccd` char(12) NOT NULL,
   `diachi` varchar(255) DEFAULT NULL,
   `hinh` varchar(255) DEFAULT NULL,
   `trangthai` tinyint(1) NOT NULL,
@@ -205,10 +204,10 @@ CREATE TABLE `nhan_vien` (
 -- Đang đổ dữ liệu cho bảng `nhan_vien`
 --
 
-INSERT INTO `nhan_vien` (`ma_nv`, `tennv`, `matkhau`, `phai`, `sdt`, `email`, `cccd`, `diachi`, `hinh`, `trangthai`, `ma_vt`) VALUES
-('QL_01', 'Võ Chung Khánh Đăng', '123456', 0, '0912345678', 'admin@zyuuki.vn', '000000000001', 'Cần Thơ', NULL, 0, 'Admin'),
-('NV_01', 'Trần Văn Nam', '123456', 0, '0912000111', 'staff1@zyuuki.vn', '012345678901', 'Hà Nội', NULL, 0, 'Staff'),
-('NV_02', 'Phạm Thị Linh', '123456', 0, '0912000222', 'staff2@zyuuki.vn', '098765432109', 'TP. Hồ Chí Minh', NULL, 0, 'Staff');
+INSERT INTO `nhan_vien` (`ma_nv`, `tennv`, `matkhau`, `phai`, `sdt`, `email`, `diachi`, `hinh`, `trangthai`, `ma_vt`) VALUES
+('NV_01', 'Trần Văn Nam', '123456', 1, '0912000111', 'staff1@zyuuki.vn', 'Hà Nội', NULL, 0, 'Staff'),
+('NV_02', 'Phạm Thị Linh', '123456', 0, '0912000222', 'staff2@zyuuki.vn', 'TP. Hồ Chí Minh', NULL, 0, 'Staff'),
+('QL_01', 'Võ Chung Khánh Đăng', '123456', 1, '0912345678', 'admin@zyuuki.vn', 'Cần Thơ', NULL, 0, 'Admin');
 
 -- --------------------------------------------------------
 
@@ -229,11 +228,11 @@ CREATE TABLE `nha_san_xuat` (
 --
 
 INSERT INTO `nha_san_xuat` (`ma_nsx`, `tennsx`, `diachi`, `sdt`, `email`) VALUES
-('NSX01', 'Yamaha', 'Nhật Bản', '0845123456', 'contact@yamaha.jp'),
-('NSX02', 'Casio', 'Nhật Bản', '0811122233', 'support@casio.jp'),
-('NSX03', 'Fender', 'Mỹ', '0800345678', 'info@fender.com'),
-('NSX04', 'MeiLan', 'Trung Quốc', '0869988776', 'info@meilan.cn'),
-('NSX05', 'Vic Firth', 'Mỹ', '0899123456', 'contact@vicfirth.com');
+('casio', 'Casio', 'Nhật Bản', '0811122233', 'support@casio.jp'),
+('fender', 'Fender', 'Mỹ', '0800345678', 'info@fender.com'),
+('meilan', 'MeiLan', 'Trung Quốc', '0869988776', 'info@meilan.cn'),
+('vicfirth', 'Vic Firth', 'Mỹ', '0899123456', 'contact@vicfirth.com'),
+('yamaha', 'Yamaha', 'Nhật Bản', '0845123456', 'contact@yamaha.jp');
 
 -- --------------------------------------------------------
 
@@ -256,36 +255,36 @@ CREATE TABLE `san_pham` (
 --
 
 INSERT INTO `san_pham` (`ma_sp`, `tensp`, `ma_nsx`, `ma_loai`, `giasp`, `soluongton`, `mota`) VALUES
-('SP01', 'Guitar Classic C40', 'NSX01', 'L01', '2500000.00', 20, 'Guitar gỗ phù hợp cho người mới học'),
-('SP02', 'Piano Dien PX-S1000', 'NSX02', 'L02', '18000000.00', 5, 'Dòng piano điện cao cấp của Casio'),
-('SP03', 'Sáo trúc Việt', 'NSX04', 'L03', '300000.00', 50, 'Sáo trúc truyền thống âm thanh ấm áp'),
-('SP04', 'Trống Jazz Set', 'NSX03', 'L04', '12500000.00', 3, 'Bộ trống dành cho biểu diễn sân khấu'),
-('SP05', 'Dây đàn DAddario', 'NSX03', 'L05', '120000.00', 100, 'Dây đàn thay thế chất lượng cao'),
-('SP06', 'Guitar Điện Strat', 'NSX03', 'L01', '15000000.00', 15, 'Guitar điện Fender nổi tiếng'),
-('SP07', 'Piano Cơ U1', 'NSX01', 'L02', '120000000.00', 2, 'Piano cơ Yamaha cao cấp'),
-('SP08', 'Bao Đàn Guitar Dày', 'NSX01', 'L05', '450000.00', 40, 'Bao đàn chất lượng cao, chống sốc'),
-('SP09', 'Trống Điện DTX', 'NSX01', 'L04', '19000000.00', 7, 'Bộ trống điện tử Yamaha'),
-('SP10', 'Dùi Trống 5A', 'NSX05', 'L05', '250000.00', 80, 'Dùi trống Vic Firth phổ thông'),
-('SP11', 'Guitar Acoustic FG800M', 'NSX01', 'L01', '5800000.00', 0, 'Guitar Acoustic tầm trung của Yamaha, âm thanh cân bằng, mặt gỗ Mahogany.'),
-('SP12', 'Đàn Ukulele Soprano', 'NSX04', 'L01', '650000.00', 0, 'Ukulele gỗ tự nhiên, size Soprano, âm thanh vui tươi, dễ học.'),
-('SP13', 'Keyboard CT-S300', 'NSX02', 'L02', '4200000.00', 0, 'Keyboard điện tử Casio, 61 phím cảm ứng lực, phù hợp cho người mới.'),
-('SP14', 'Metronome cơ học', 'NSX05', 'L05', '750000.00', 0, 'Máy đập nhịp cơ học cổ điển, hỗ trợ luyện tập tiết tấu chính xác.'),
-('SP15', 'Harmonica Diatonic', 'NSX01', 'L03', '400000.00', 0, 'Kèn Harmonica 10 lỗ Diatonic, tone C, dễ sử dụng.'),
-('SP16', 'Amplifier Guitar 10W', 'NSX03', 'L05', '2800000.00', 0, 'Amply nhỏ gọn Fender cho guitar điện, công suất 10W, có hiệu ứng Distortion.'),
-('SP17', 'Piano Điện CDP-S150', 'NSX02', 'L02', '14500000.00', 0, 'Dòng piano điện mỏng nhẹ của Casio, 88 phím có độ nặng.'),
-('SP18', 'Sáo Recorder Baroque', 'NSX04', 'L03', '180000.00', 0, 'Sáo nhựa Recorder hệ thống Baroque, thích hợp cho giáo dục âm nhạc.'),
-('SP19', 'Trống Cajun box', 'NSX03', 'L04', '3500000.00', 0, 'Trống Cajon làm bằng gỗ bạch dương, âm trầm và âm snare rõ ràng.'),
-('SP20', 'Dây Micro Canon', 'NSX05', 'L05', '300000.00', 0, 'Dây cáp micro XLR dài 3m, chất lượng truyền tín hiệu tốt.'),
-('SP21', 'Guitar Acoustic F310', 'NSX01', 'L01', '3200000.00', 0, 'Mẫu đàn Acoustic phổ biến, âm thanh vang, rất được ưa chuộng.'),
-('SP22', 'Piano Điện P-125', 'NSX01', 'L02', '19500000.00', 0, 'Piano điện Yamaha P-Series, âm thanh Pure CF, gọn và mạnh mẽ.'),
-('SP23', 'Trống Lắc Tambourine', 'NSX04', 'L05', '150000.00', 0, 'Nhạc cụ gõ Tambourine, vỏ nhựa, chuông kim loại, âm thanh sáng.'),
-('SP24', 'Bộ Dây Đàn Piano', 'NSX01', 'L05', '1200000.00', 0, 'Bộ dây đàn piano cơ thay thế, chất liệu thép cao cấp.'),
-('SP25', 'Sáo Flute Bạc', 'NSX01', 'L03', '8500000.00', 0, 'Sáo Flute tiêu chuẩn, thân mạ bạc, âm thanh trong trẻo, chuyên nghiệp.'),
-('SP26', 'Giá Đỡ Nhạc Đa Năng', 'NSX05', 'L05', '550000.00', 0, 'Chân đỡ nhạc bằng thép, có thể điều chỉnh độ cao, gấp gọn.'),
-('SP27', 'Guitar Điện Telecaster', 'NSX03', 'L01', '17000000.00', 0, 'Guitar điện Fender Telecaster, âm thanh twang đặc trưng, thiết kế cổ điển.'),
-('SP28', 'Piano Cơ B1', 'NSX01', 'L02', '80000000.00', 0, 'Piano cơ Yamaha B-series, nhỏ gọn, phù hợp cho căn hộ.'),
-('SP29', 'Pad Luyện Tập Trống', 'NSX05', 'L05', '600000.00', 0, 'Bề mặt cao su, giúp luyện tập trống yên lặng và tăng cường độ nảy.'),
-('SP30', 'Trống Đồng Latin', 'NSX04', 'L04', '4800000.00', 0, 'Bộ Trống Conga/Bongo kiểu Latin, âm thanh vang, phù hợp cho nhạc Latin Jazz.');
+('SP01', 'Guitar Classic C40', 'yamaha', 'guitar', '2500000.00', 20, 'Guitar gỗ phù hợp cho người mới học'),
+('SP02', 'Piano Dien PX-S1000', 'casio', 'piano', '18000000.00', 5, 'Dòng piano điện cao cấp của Casio'),
+('SP03', 'Sáo trúc Việt', 'meilan', 'flute', '300000.00', 50, 'Sáo trúc truyền thống âm thanh ấm áp'),
+('SP04', 'Trống Jazz Set', 'fender', 'drum', '12500000.00', 3, 'Bộ trống dành cho biểu diễn sân khấu'),
+('SP05', 'Dây đàn DAddario', 'fender', 'accessory', '120000.00', 100, 'Dây đàn thay thế chất lượng cao'),
+('SP06', 'Guitar Điện Strat', 'fender', 'guitar', '15000000.00', 15, 'Guitar điện Fender nổi tiếng'),
+('SP07', 'Piano Cơ U1', 'yamaha', 'piano', '120000000.00', 2, 'Piano cơ Yamaha cao cấp'),
+('SP08', 'Bao Đàn Guitar Dày', 'yamaha', 'accessory', '450000.00', 40, 'Bao đàn chất lượng cao, chống sốc'),
+('SP09', 'Trống Điện DTX', 'yamaha', 'drum', '19000000.00', 7, 'Bộ trống điện tử Yamaha'),
+('SP10', 'Dùi Trống 5A', 'vicfirth', 'accessory', '250000.00', 80, 'Dùi trống Vic Firth phổ thông'),
+('SP11', 'Guitar Acoustic FG800M', 'yamaha', 'guitar', '5800000.00', 0, 'Guitar Acoustic tầm trung của Yamaha, âm thanh cân bằng, mặt gỗ Mahogany.'),
+('SP12', 'Đàn Ukulele Soprano', 'meilan', 'guitar', '650000.00', 0, 'Ukulele gỗ tự nhiên, size Soprano, âm thanh vui tươi, dễ học.'),
+('SP13', 'Keyboard CT-S300', 'casio', 'piano', '4200000.00', 0, 'Keyboard điện tử Casio, 61 phím cảm ứng lực, phù hợp cho người mới.'),
+('SP14', 'Metronome cơ học', 'vicfirth', 'accessory', '750000.00', 0, 'Máy đập nhịp cơ học cổ điển, hỗ trợ luyện tập tiết tấu chính xác.'),
+('SP15', 'Harmonica Diatonic', 'yamaha', 'flute', '400000.00', 0, 'Kèn Harmonica 10 lỗ Diatonic, tone C, dễ sử dụng.'),
+('SP16', 'Amplifier Guitar 10W', 'fender', 'accessory', '2800000.00', 0, 'Amply nhỏ gọn Fender cho guitar điện, công suất 10W, có hiệu ứng Distortion.'),
+('SP17', 'Piano Điện CDP-S150', 'casio', 'piano', '14500000.00', 0, 'Dòng piano điện mỏng nhẹ của Casio, 88 phím có độ nặng.'),
+('SP18', 'Sáo Recorder Baroque', 'meilan', 'flute', '180000.00', 0, 'Sáo nhựa Recorder hệ thống Baroque, thích hợp cho giáo dục âm nhạc.'),
+('SP19', 'Trống Cajun box', 'fender', 'drum', '3500000.00', 0, 'Trống Cajon làm bằng gỗ bạch dương, âm trầm và âm snare rõ ràng.'),
+('SP20', 'Dây Micro Canon', 'vicfirth', 'accessory', '300000.00', 0, 'Dây cáp micro XLR dài 3m, chất lượng truyền tín hiệu tốt.'),
+('SP21', 'Guitar Acoustic F310', 'yamaha', 'guitar', '3200000.00', 0, 'Mẫu đàn Acoustic phổ biến, âm thanh vang, rất được ưa chuộng.'),
+('SP22', 'Piano Điện P-125', 'yamaha', 'piano', '19500000.00', 0, 'Piano điện Yamaha P-Series, âm thanh Pure CF, gọn và mạnh mẽ.'),
+('SP23', 'Trống Lắc Tambourine', 'meilan', 'accessory', '150000.00', 0, 'Nhạc cụ gõ Tambourine, vỏ nhựa, chuông kim loại, âm thanh sáng.'),
+('SP24', 'Bộ Dây Đàn Piano', 'yamaha', 'accessory', '1200000.00', 0, 'Bộ dây đàn piano cơ thay thế, chất liệu thép cao cấp.'),
+('SP25', 'Sáo Flute Bạc', 'yamaha', 'flute', '8500000.00', 0, 'Sáo Flute tiêu chuẩn, thân mạ bạc, âm thanh trong trẻo, chuyên nghiệp.'),
+('SP26', 'Giá Đỡ Nhạc Đa Năng', 'vicfirth', 'accessory', '550000.00', 0, 'Chân đỡ nhạc bằng thép, có thể điều chỉnh độ cao, gấp gọn.'),
+('SP27', 'Guitar Điện Telecaster', 'fender', 'guitar', '17000000.00', 0, 'Guitar điện Fender Telecaster, âm thanh twang đặc trưng, thiết kế cổ điển.'),
+('SP28', 'Piano Cơ B1', 'yamaha', 'piano', '80000000.00', 0, 'Piano cơ Yamaha B-series, nhỏ gọn, phù hợp cho căn hộ.'),
+('SP29', 'Pad Luyện Tập Trống', 'vicfirth', 'accessory', '600000.00', 0, 'Bề mặt cao su, giúp luyện tập trống yên lặng và tăng cường độ nảy.'),
+('SP30', 'Trống Đồng Latin', 'meilan', 'drum', '4800000.00', 0, 'Bộ Trống Conga/Bongo kiểu Latin, âm thanh vang, phù hợp cho nhạc Latin Jazz.');
 
 -- --------------------------------------------------------
 
@@ -359,7 +358,6 @@ ALTER TABLE `nguoi_dung`
 ALTER TABLE `nhan_vien`
   ADD PRIMARY KEY (`ma_nv`),
   ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `cccd` (`cccd`),
   ADD KEY `ma_vt` (`ma_vt`);
 
 --
@@ -403,38 +401,52 @@ ALTER TABLE `hinh`
 --
 ALTER TABLE `nguoi_dung`
   MODIFY `ma_nd` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `chi_tiet_don_dat_hang`
+--
+ALTER TABLE `chi_tiet_don_dat_hang`
+  ADD CONSTRAINT `chi_tiet_don_dat_hang_ibfk_1` FOREIGN KEY (`ma_ddh`) REFERENCES `don_dat_hang` (`ma_ddh`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `chi_tiet_don_dat_hang_ibfk_2` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `danh_gia`
+--
+ALTER TABLE `danh_gia`
+  ADD CONSTRAINT `danh_gia_ibfk_1` FOREIGN KEY (`ma_nd`) REFERENCES `nguoi_dung` (`ma_nd`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `danh_gia_ibfk_2` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `don_dat_hang`
+--
+ALTER TABLE `don_dat_hang`
+  ADD CONSTRAINT `don_dat_hang_ibfk_1` FOREIGN KEY (`ma_nd`) REFERENCES `nguoi_dung` (`ma_nd`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `don_dat_hang_ibfk_2` FOREIGN KEY (`ma_nv`) REFERENCES `nhan_vien` (`ma_nv`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `hinh`
+--
+ALTER TABLE `hinh`
+  ADD CONSTRAINT `hinh_ibfk_1` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `nhan_vien`
+--
+ALTER TABLE `nhan_vien`
+  ADD CONSTRAINT `nhan_vien_ibfk_1` FOREIGN KEY (`ma_vt`) REFERENCES `vai_tro` (`ma_vt`) ON UPDATE CASCADE;
+
+--
+-- Các ràng buộc cho bảng `san_pham`
+--
+ALTER TABLE `san_pham`
+  ADD CONSTRAINT `san_pham_ibfk_1` FOREIGN KEY (`ma_nsx`) REFERENCES `nha_san_xuat` (`ma_nsx`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `san_pham_ibfk_2` FOREIGN KEY (`ma_loai`) REFERENCES `loai_san_pham` (`ma_loai`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
--- Tạo mối quan hệ (Khóa ngoại - Foreign Key) cho các bảng
-
--- Mối quan hệ cho bảng `chi_tiet_don_dat_hang`
-ALTER TABLE `chi_tiet_don_dat_hang`
-  ADD CONSTRAINT `chi_tiet_don_dat_hang_ibfk_1` FOREIGN KEY (`ma_ddh`) REFERENCES `don_dat_hang` (`ma_ddh`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `chi_tiet_don_dat_hang_ibfk_2` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- Mối quan hệ cho bảng `danh_gia`
-ALTER TABLE `danh_gia`
-  ADD CONSTRAINT `danh_gia_ibfk_1` FOREIGN KEY (`ma_nd`) REFERENCES `nguoi_dung` (`ma_nd`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `danh_gia_ibfk_2` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- Mối quan hệ cho bảng `don_dat_hang`
-ALTER TABLE `don_dat_hang`
-  ADD CONSTRAINT `don_dat_hang_ibfk_1` FOREIGN KEY (`ma_nd`) REFERENCES `nguoi_dung` (`ma_nd`) ON DELETE RESTRICT ON UPDATE CASCADE,
-  ADD CONSTRAINT `don_dat_hang_ibfk_2` FOREIGN KEY (`ma_nv`) REFERENCES `nhan_vien` (`ma_nv`) ON DELETE SET NULL ON UPDATE CASCADE;
-
--- Mối quan hệ cho bảng `hinh`
-ALTER TABLE `hinh`
-  ADD CONSTRAINT `hinh_ibfk_1` FOREIGN KEY (`ma_sp`) REFERENCES `san_pham` (`ma_sp`) ON DELETE CASCADE ON UPDATE CASCADE;
-
--- Mối quan hệ cho bảng `nhan_vien`
-ALTER TABLE `nhan_vien`
-  ADD CONSTRAINT `nhan_vien_ibfk_1` FOREIGN KEY (`ma_vt`) REFERENCES `vai_tro` (`ma_vt`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- Mối quan hệ cho bảng `san_pham`
-ALTER TABLE `san_pham`
-  ADD CONSTRAINT `san_pham_ibfk_1` FOREIGN KEY (`ma_nsx`) REFERENCES `nha_san_xuat` (`ma_nsx`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `san_pham_ibfk_2` FOREIGN KEY (`ma_loai`) REFERENCES `loai_san_pham` (`ma_loai`) ON DELETE SET NULL ON UPDATE CASCADE;

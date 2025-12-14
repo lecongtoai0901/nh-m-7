@@ -37,29 +37,64 @@
                 $url = $dir . trim($item->ma_sp) . "/" . $tenfile;
             }
         ?>
-            <div class="col-md-4 mb-4 ho-item">
-                <div class="card h-100">
-                    <div class="col h-100">
-                        <div class="card">
-                            <a href="<?=$baseUrl?>/SanPham/ChiTiet?id=<?php echo htmlspecialchars($item->ma_sp); ?>">
-                                <div class="d-flex p-1 align-content-center" style="height: 250px">
-                                    <img src="<?php echo htmlspecialchars($url); ?>" class="card-img-top" alt="Hình Sản Phẩm" style="object-fit:contain;">
-                                </div>
-                            </a>
-                            <div class="card-body">
-                                <h3 class="card-title fw-bold" style="height: 80px"><?php echo htmlspecialchars($item->tensp); ?> </h3>
-                                <h5 class="card-text text-danger text-center mb-3" style="height: 20px"><?php echo number_format($item->giasp, 0, ',', '.') . " đ"; ?></h5>
-                                <div class="d-flex w-100 justify-content-end">
-                                    <form action="<?=$baseUrl?>/DonDatHang/MuaNgay?id=<?php echo htmlspecialchars($item->ma_sp); ?>" method="post" class="flex-fill">
-                                        <input type="hidden" name="soluong" value="1" />
-                                        <button type="submit" class="btn btn-warning w-100 mt-2 fs-4">Mua ngay</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+        <div class="col-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 product-card border-0 shadow-sm rounded-3">
+                
+                <a href="<?=$baseUrl?>/SanPham/ChiTiet?id=<?php echo htmlspecialchars($item->ma_sp); ?>" class="text-decoration-none">
+                    <div class="card-img-wrapper border-bottom">
+                        <img src="<?php echo htmlspecialchars($url); ?>" alt="<?php echo htmlspecialchars($item->tensp); ?>">
                     </div>
+                </a>
+
+                <div class="card-body d-flex flex-column p-3">
+                    <h6 class="card-title mb-2">
+                        <a href="<?=$baseUrl?>/SanPham/ChiTiet?id=<?php echo htmlspecialchars($item->ma_sp); ?>" class="text-dark text-decoration-none text-clamp-2" title="<?php echo htmlspecialchars($item->tensp); ?>">
+                            <?php echo htmlspecialchars($item->tensp); ?>
+                        </a>
+                    </h6>
+
+                    <div class="mt-auto mb-3 text-center">
+                        <span class="text-danger fw-bold fs-5">
+                            <?php echo number_format($item->giasp, 0, ',', '.'); ?> đ
+                        </span>
+                    </div>
+
+                    <form action="<?=$baseUrl?>/DonDatHang/MuaNgay?id=<?php echo htmlspecialchars($item->ma_sp); ?>" method="post">
+                        <input type="hidden" name="soluong" value="1" />
+                        <button type="submit" class="btn btn-buy-now w-100 rounded-pill py-2">
+                            <i class="bi bi-cart-plus me-1"></i> Mua Ngay
+                        </button>
+                    </form>
                 </div>
             </div>
+        </div>
         <?php } ?>
     <?php } ?>
 </div>
+<?php if (isset($tongtrang) && $tongtrang > 1): ?>
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            <?php
+                $cp = isset($tranghientai) ? (int)$tranghientai : 1;
+                $tp = (int)$tongtrang;
+                $prevClass = $cp <= 1 ? ' disabled' : '';
+                $nextClass = $cp >= $tp ? ' disabled' : '';
+            ?>
+            <li class="page-item<?php echo $prevClass; ?>">
+                <a class="page-link" href="<?php echo htmlspecialchars($baseUrl . '/SanPham?page=' . max(1, $cp - 1)); ?>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <?php for ($i = 1; $i <= $tp; $i++): ?>
+                <li class="page-item<?php echo ($i === $cp) ? ' active' : ''; ?>">
+                    <a class="page-link" href="<?php echo htmlspecialchars($baseUrl . '/SanPham?page=' . $i); ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+            <li class="page-item<?php echo $nextClass; ?>">
+                <a class="page-link" href="<?php echo htmlspecialchars($baseUrl . '/SanPham?page=' . min($tp, $cp + 1)); ?>" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<?php endif; ?>

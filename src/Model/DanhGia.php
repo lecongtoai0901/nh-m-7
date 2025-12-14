@@ -48,4 +48,17 @@ class DanhGia
         } catch (\Exception) {}
         return count($items) > 0 ? $items : [];
     }
+
+    public static function getByProductId($pdo, $id){
+        $items = [];
+        try {
+            $query = "SELECT ma_nd, ma_sp, noidung, sosao FROM danh_gia WHERE ma_sp = :id";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute(['id' => $id]);
+            while ($row = $stmt->fetch()) {
+                $items[] = new self($row['ma_nd'], $row['ma_sp'], $row['noidung'] ?? '', $row['sosao'] ?? null);
+            }
+        } catch (\Exception) {}
+        return count($items) > 0 ? $items : [];
+    }
 }

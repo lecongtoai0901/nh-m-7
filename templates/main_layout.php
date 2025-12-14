@@ -9,117 +9,135 @@ $baseUrl = $GLOBALS['baseUrl'] ?? '';
 <html lang="vi">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Shop Nhạc Cụ - Mua Bán Nhạc Cụ Chính Hãng</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">   
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zyuuki Music - Nhạc Cụ Chính Hãng</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <?php $cssPath = __DIR__ . '/../assets/css/style.css';
+        $cssVersion = file_exists($cssPath) ? filemtime($cssPath) : time(); ?>
+    <link rel="stylesheet" href="<?= $baseUrl ?>/assets/css/style.css?v=<?= $cssVersion ?>">
+    <style>
+
+    </style>
 </head>
+
 <body class="d-flex flex-column" style="min-height: 100vh;">
+
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-               <a class="navbar-brand me-0" href="<?=$baseUrl?>/">
-                    <img src="./assets/images/logo.png" alt="Logo" style="height:50px;" class="ms-5 me-5" />
+    <nav class="navbar navbar-expand-lg sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand me-4" href="<?=$baseUrl?>/">
+                <img src="<?=$baseUrl?>/assets/images/logo.png" alt="Zyuuki Music" style="height: 50px; object-fit: contain;">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between" id="navbarSupportedContent">
-                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-evenly me-5">
-                        <li class="nav-item">
-                            <a href="<?=$baseUrl?>/" class="nav-link text-dark fs-5" >Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?=$baseUrl?>/GioiThieu" class="nav-link text-dark fs-5" >Giới thiệu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?=$baseUrl?>/SanPham" class="nav-link text-dark fs-5">Sản phẩm</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="<?=$baseUrl?>/DanhGia" class="nav-link text-dark fs-5">Đánh giá</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="d-flex align-content-center me-5">
-                    <div class="me-1">
-                        <i class="bi bi-telephone fs-3 me-1"></i>
-                    </div>
-                    <div>
-                        Hotline<br /><b>0869 347 040</b>
-                    </div>
-                </div>
-                <div class="border border-secondary rounded-2">
-                    <form action="<?=$baseUrl?>/SanPham/TimKiem" class="d-flex" method="get">
-                        <input class="form-control border-0 " type="search" name="keyword" placeholder="Tìm kiếm sản phẩm..">
-                        <button type="submit" class="btn rounded-2"><i class="bi bi-search"></i></button>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item mx-2"><a href="<?=$baseUrl?>/" class="nav-link">Trang chủ</a></li>
+                    <li class="nav-item mx-2"><a href="<?=$baseUrl?>/GioiThieu" class="nav-link">Giới thiệu</a></li>
+                    <li class="nav-item mx-2"><a href="<?=$baseUrl?>/SanPham" class="nav-link">Sản phẩm</a></li>
+                    <li class="nav-item mx-2"><a href="<?=$baseUrl?>/DanhGia" class="nav-link">Đánh giá</a></li>
+                </ul>
+
+                <div class="d-flex align-items-center gap-3 flex-column flex-lg-row">
+                    <form action="<?=$baseUrl?>/SanPham/TimKiem" method="get" class="d-flex input-group" style="width: 250px;">
+                        <input class="form-control border-end-0" type="search" name="keyword" placeholder="Tìm nhạc cụ..." aria-label="Search">
+                        <button class="btn btn-outline-secondary border-start-0 btn-search" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
                     </form>
-                </div>
-                <div class="position-relative">
-                    <form action="<?=$baseUrl?>/DonDatHang/GioHang" method="post">
-                        <button class="btn ms-3 me-3" type="submit">
-                            <i class="bi bi-cart fs-4"></i>
-                            <i class="bi bi-circle-fill text-danger position-absolute start-50"></i>
-                            <span class="position-absolute start-50 ms-1">
-                                0
-                            </span>
+
+                    <div class="d-none d-xl-block text-end lh-1">
+                        <small class="text-muted" style="font-size: 0.75rem;">Hotline hỗ trợ</small><br>
+                        <span class="fw-bold text-dark">0869 347 040</span>
+                    </div>
+
+                    <form action="<?=$baseUrl?>/DonDatHang/GioHang" method="post" class="d-inline">
+                        <button class="cart-btn text-dark p-2" type="submit">
+                            <i class="bi bi-cart3 fs-4"></i>
+                            <span class="badge rounded-pill bg-danger cart-badge">0</span>
+                        </button>
+                    </form>
+
+                    <form action="<?=$baseUrl?>/User/DangNhap" method="post" class="d-inline">
+                        <button class="btn btn-outline-dark rounded-pill px-4" type="submit">
+                            <i class="bi bi-person-fill me-1"></i> Đăng nhập
                         </button>
                     </form>
                 </div>
-                <form action="<?=$baseUrl?>/User/DangNhap" method="post">
-                    <button class="btn btn-outline-info d-flex align-items-center" type="submit">
-                        <i class="bi bi-person fs-4"></i><span class="ms-2">Đăng Nhập</span>
-                    </button>
-                </form>
-            </div>
-        </nav>
-</header>
-
-<div class="container flex-grow-1">
-    <main role="main" class="pb-3">
-        <?php if (isset($content)) echo $content; ?>
-    </main>
-</div>
-<footer class="border-top bg-dark footer text-muted">
-    <div class="container text-center text-light py-3">    
-        <div class="row mt-2">
-            <div class="col-md-4">
-                <h5>Về Chúng Tôi</h5>
-                <p>Chúng tôi cam kết mang đến những sản phẩm nhạc cụ chất lượng cao với dịch vụ khách hàng tận tâm.</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Liên Hệ</h5>
-                <p>Địa chỉ: 180 Cao lỗ, Phường 4, Quận 8, TP.HCM<br/>
-                   Điện thoại: 0869 347 040<br/>
-                   Email: dh52200473@student.stu.edu.vn
-                </p>
-            </div>
-            <div class="col-md-4">
-                <style>
-                    table, th, td {
-                        border: 0;
-                        border-collapse: collapse;
-                        padding: 5px;
-                        background-color: rgb(33 37 41) !important;
-                        color: white !important;
-                    }
-                </style>
-                <h5>Thực Hiện</h5>
-                <table class="table">
-                    <tr>
-                        <td>Lê Văn Đạt/DH52200473/D22_TH06</td>
-                    </tr>
-                    <tr>
-                        <td>Lê Công Toại/DH52201583/D22_TH06</td>
-                    </tr>
-                </table>
             </div>
         </div>
-        <hr/>
-        &copy; 2025 - Zyuuki Music Store
+    </nav>
+</header>
+
+<div class="flex-grow-1 bg-light">
+    <main role="main" class="container py-4">
+        <?php if (isset($content)) echo $content; ?>
+        
+        <?php if (!isset($content)): ?>
+            <div class="alert alert-info text-center">
+                <h3>KHÔNG TÌM THẤY NỘI DUNG PHÙ HỢP!</h3>
+            </div>
+        <?php endif; ?>
+    </main>
+</div>
+
+<footer class="pt-5 pb-3">
+    <div class="container">    
+        <div class="row gy-4">
+            <div class="col-md-4">
+                <h5>Về Chúng Tôi</h5>
+                <p class="small">Chúng tôi chuyên cung cấp các loại nhạc cụ Piano, Guitar, Violin chính hãng với giá tốt nhất thị trường cùng chế độ bảo hành uy tín.</p>
+                <div class="mt-3">
+                    <a href="#" class="me-3 fs-5"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="me-3 fs-5"><i class="bi bi-youtube"></i></a>
+                    <a href="#" class="me-3 fs-5"><i class="bi bi-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <h5>Thông Tin Liên Hệ</h5>
+                <ul class="list-unstyled small">
+                    <li class="mb-2"><i class="bi bi-geo-alt-fill me-2 text-warning"></i> 180 Cao Lỗ, Phường 4, Quận 8, TP.HCM</li>
+                    <li class="mb-2"><i class="bi bi-telephone-fill me-2 text-warning"></i> 0869 347 040</li>
+                    <li class="mb-2"><i class="bi bi-envelope-fill me-2 text-warning"></i> dh52200473@student.stu.edu.vn</li>
+                </ul>
+            </div>
+
+            <div class="col-md-4">
+                <h5>Đội Ngũ Thực Hiện</h5>
+                <ul class="list-unstyled student-info ps-2 border-start border-secondary">
+                    <li>
+                        <strong>Lê Văn Đạt</strong><br>
+                        <span class="text-secondary">MSSV: DH52200473 - Lớp: D22_TH06</span>
+                    </li>
+                    <li class="mt-3">
+                        <strong>Lê Công Toại</strong><br>
+                        <span class="text-secondary">MSSV: DH52201583 - Lớp: D22_TH06</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <hr class="border-secondary mt-5 mb-3"/>
+        <div class="text-center small text-secondary">
+            &copy; 2025 - <strong>Zyuuki Music Store</strong>. All rights reserved.
+        </div>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<?php $jsPath = __DIR__ . '/../assets/js/script.js';
+    $jsVersion = file_exists($jsPath) ? filemtime($jsPath) : time(); ?>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?= $baseUrl ?>/assets/js/script.js?v=<?= $jsVersion ?>"></script>
 </body>
 </html>

@@ -42,6 +42,26 @@ class Product
         }
     }
 
+    public static function getById($pdo, $id){
+        $sql = 'select ma_sp, tensp, ma_nsx, ma_loai, giasp, soluongton, mota from san_pham where ma_sp = :id';
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        if ($row) {
+            return new self(
+                $row['ma_sp'],
+                $row['tensp'],
+                $row['giasp'],
+                $row['soluongton'] ?? 0,
+                $row['mota'] ?? '',
+                $row['ma_nsx'] ?? '',
+                $row['ma_loai'] ?? ''
+            );
+        }
+        return null;
+    }
+
     public static function getAll($pdo)
     {
         $products = [];
@@ -62,4 +82,65 @@ class Product
             } catch (\Exception) {}
         return count($products) > 0 ? $products : [];
     }
+
+    public static function countAll($pdo)
+    {
+        try {
+            $query = "SELECT COUNT(*) FROM san_pham";
+            $stmt = $pdo->query($query);
+            return (int) $stmt->fetchColumn();
+        } catch (\Exception) {
+            return 0;
+        }
+    }
+
+    public static function getPage($pdo, $limit, $offset)
+    {
+        $products = [];
+        try {
+            $query = "SELECT ma_sp, tensp, ma_nsx, ma_loai, giasp, soluongton, mota FROM san_pham LIMIT :limit OFFSET :offset";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(':limit', (int)$limit, \PDO::PARAM_INT);
+            $stmt->bindValue(':offset', (int)$offset, \PDO::PARAM_INT);
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                $products[] = new self(
+                    $row['ma_sp'],
+                    $row['tensp'],
+                    $row['giasp'],
+                    $row['soluongton'] ?? 0,
+                    $row['mota'] ?? '',
+                    $row['ma_nsx'] ?? '',
+                    $row['ma_loai'] ?? ''
+                );
+            }
+        } catch (\Exception) {}
+        return count($products) > 0 ? $products : [];
+    }
+
+    public static function getRelatedProducts($pdo, $ma_loai, $ma_sp, $limit){
+        $products = [];
+        try {
+            $query = "SELECT ma_sp, tensp, ma_nsx, ma_loai, giasp, soluongton, mota FROM san_pham WHERE ma_loai = :ma_loai AND ma_sp != :ma_sp LIMIT :limit";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindValue(':ma_loai', $ma_loai);
+            $stmt->bindValue(':ma_sp', $ma_sp);
+            $stmt->bindValue(':limit', (int)$limit, \PDO::PARAM_INT);
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                $products[] = new self(
+                    $row['ma_sp'],
+                    $row['tensp'],
+                    $row['giasp'],
+                    $row['soluongton'] ?? 0,
+                    $row['mota'] ?? '',
+                    $row['ma_nsx'] ?? '',
+                    $row['ma_loai'] ?? ''
+                );
+            }
+        } catch (\Exception) {}
+        return count($products) > 0 ? $products : [];
+    }
+
+    
 }

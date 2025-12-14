@@ -5,10 +5,10 @@
     }
     $max = 10;
 ?>
-<header class="mt-5 mb-4">
-    <h2 class="text-primary fw-bold">Đánh giá nổi bật</h2>
-    <hr class="text-info">
-</header>
+<div class="text-center mt-5 mb-5">
+    <h2 class="section-title text-uppercase">Khách hàng nói gì về chúng tôi</h2>
+    <p class="text-muted">Những đánh giá chân thực từ khách hàng đã trải nghiệm sản phẩm tại Zyuuki Music</p>
+</div>
 <?php foreach ($danhgias as $item): ?>
     <?php if($item->sosao >= 4) {
         if($max-- <= 0) {
@@ -49,3 +49,4 @@
         </section>
     <?php } ?>
 <?php endforeach; ?>
+<div style="height: 100px;"></div>
