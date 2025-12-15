@@ -4,8 +4,14 @@ $baseUrl = $GLOBALS['baseUrl'] ?? '';
 ?>
 
 <div class="container mt-4">
+    <?php if (isset($_SESSION['MessageError_GioHang'])): ?>
+    <div class="alert alert-danger alert-dismissible text-center fade show" role="alert">
+        <?= htmlspecialchars($_SESSION['MessageError_GioHang']) ?>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php unset($_SESSION['MessageError_GioHang']); ?>
+    <?php endif; ?>
     <h3 class="fw-bold mb-4 text-uppercase"><i class="bi bi-cart3"></i> Giỏ hàng của bạn</h3>
-
     <?php if (empty($items)): ?>
         <div class="text-center py-5 bg-light rounded-3">
             <i class="bi bi-cart3 text-muted fs-1"></i>
@@ -108,4 +114,5 @@ $baseUrl = $GLOBALS['baseUrl'] ?? '';
             </div>
         </div>
     <?php endif; ?>
+    <div style="height: 100px;"></div>
 </div>

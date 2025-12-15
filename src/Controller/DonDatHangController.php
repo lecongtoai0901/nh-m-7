@@ -260,9 +260,11 @@ class DonDatHangController
         $baseUrl = $GLOBALS['baseUrl'] ?? '';
         $user = $_SESSION['user'] ?? null;
         if (!$user) {
-            header('Location: ' . $baseUrl . '/');
+            $_SESSION['MessageError_GioHang'] = 'Vui lòng đăng nhập để thực hiện thanh toán.';
+            header('Location: ' . $baseUrl . '/DonDatHang/GioHang');
             exit;
         }
+
 
         $cart = $_SESSION['dondathang'] ?? ['items' => []];
         $items = $cart['items'] ?? [];
@@ -293,10 +295,9 @@ class DonDatHangController
             $ngaydat = date('Y-m-d H:i:s');
 
             $tt_thanhtoan = ($paymentMethod === 'vnpay') ? 'Đã thanh toán' : 'Chưa thanh toán';
-            $trangthai = ($paymentMethod === 'vnpay') ? 'Đã xác nhận' : 'Đang xử lý';
-
+            $trangthai = ($paymentMethod === 'vnpay') ? 'Đã xử lý' : 'Đang xử lý';
+            $ma_nv = ($paymentMethod === 'vnpay') ? 'NV_01' : 'NV_02';
             $ins = $pdo->prepare('INSERT INTO don_dat_hang (ma_ddh, ma_nd, ma_nv, diachi, ngaydat, tongtien, trangthai, tt_thanhtoan) VALUES (:ma_ddh, :ma_nd, :ma_nv, :diachi, :ngaydat, :tongtien, :trangthai, :tt_thanhtoan)');
-            $ma_nv = ($paymentMethod === 'vnpay') ? 1 : null; 
             $ins->execute([
                 'ma_ddh' => $next,
                 'ma_nd' => $user['ma_nd'],
