@@ -1,10 +1,34 @@
-<?php $baseUrl = $GLOBALS['baseUrl'] ?? ''; ?>
+<?php
+ $baseUrl = $GLOBALS['baseUrl'] ?? ''; 
+ $loaiID = $_SESSION['loaiID'] ?? null;
+ $nsxID = $_SESSION['nsxID'] ?? null;
+ $keyword = $_SESSION['keyword'] ?? null;
+ ?>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-light p-3 rounded-3">
 
         <li class="breadcrumb-item">
             <a href="<?=$baseUrl?>/SanPham" class="text-secondary"><i class="bi bi-house"></i></a>
         </li>
+        <?php if ($loaiID): ?>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a class="text-decoration-none text-secondary" href="<?=$baseUrl?>/SanPham/LocLoai?maloai=<?=$loaiID ?>">
+                    <span class="text-uppercase"><?= $loaiID ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <?php if ($nsxID): ?>
+            <li class="breadcrumb-item active" aria-current="page">
+                <a class="text-decoration-none text-secondary" href="<?=$baseUrl?>/SanPham/LocNSX?mansx=<?= $nsxID ?>">
+                    <span class="text-uppercase"><?= $nsxID ?></span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <?php if ($keyword): ?>
+            <li class="breadcrumb-item active" aria-current="page">
+                <span class="text-uppercase">Kết quả tìm kiếm:  "<?= htmlspecialchars($keyword) ?>"</span>
+            </li>
+        <?php endif; ?>
     </ol>
 </nav>
 <div class="row g-4">
@@ -80,9 +104,6 @@
                 $tp = (int)$tongtrang;
                 $prevClass = $cp <= 1 ? ' disabled' : '';
                 $nextClass = $cp >= $tp ? ' disabled' : '';
-                $loaiID = $_SESSION['loaiID'] ?? null;
-                $nsxID = $_SESSION['nsxID'] ?? null;
-                $keyword = $_SESSION['keyword'] ?? null;
             ?>
             <li class="page-item<?php echo $prevClass; ?>">
                 <a class="page-link" href="<?php echo htmlspecialchars($baseUrl . '/SanPham?maloai=' . $loaiID . '&mansx=' . $nsxID . '&keyword=' . $keyword . '&page=' . max(1, $cp - 1)); ?>" aria-label="Previous">
