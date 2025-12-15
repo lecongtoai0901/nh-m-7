@@ -27,7 +27,7 @@
 		<div class="card mb-3">
 			<div class="card-body text-end">
 				<h5 class="card-title">Tổng cộng</h5>
-				<div class="display-6 fw-bold text-primary"><?= number_format($total ?? 0, 0, ',', '.') ?> đ</div>
+				<div class="display-6 fw-bold text-danger"><?= number_format($total ?? 0, 0, ',', '.') ?> đ</div>
 			</div>
 		</div>
 	</div>
