@@ -37,6 +37,7 @@ $admin = $_SESSION['admin'];
                     <div class="col-12 text-center mb-4">
                         <img src="./resources/images/logo.png" alt="Logo" style="max-width:250px;">
                         <h3 class="mt-4">Xin chào Admin <?php echo htmlspecialchars($admin['tennv']); ?></h3>
+                        <!-- commit test:-->
                     </div>
                     <div class="col-12">
                         <ul class="nav flex-column">
@@ -61,6 +62,9 @@ $admin = $_SESSION['admin'];
                             <li class="nav-item mt-4">
                                 <a class="nav-link text-white" href="index.php?act=logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a>
                             </li>
+                            <li class="nav-item mb-2">
+    <a class="nav-link text-white" href="#"><i class="bi bi-gear me-2"></i>Cài đặt hệ thống</a>
+</li>
                         </ul>
                     </div>
                 </div>
