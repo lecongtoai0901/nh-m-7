@@ -12,6 +12,22 @@
 
 ## 🚀 BƯỚC 1: Setup Git và tạo branches
 
+### 📍 Cách mở PowerShell/CMD
+
+**Cách nhanh nhất:**
+1. Mở **File Explorer** (Windows + E)
+2. Đi đến: `C:\wamp64\www\Mã nguồn mở\PHP-Projects`
+3. Click vào **thanh địa chỉ** (address bar) ở trên cùng
+4. Gõ: `powershell` và nhấn **Enter**
+
+**Hoặc:**
+- Click chuột phải vào thư mục → **Open PowerShell window here** (Windows 10)
+- Click chuột phải → **Open in Terminal** (Windows 11)
+
+> 💡 Xem chi tiết trong file `HUONG_DAN_MO_CMD.md`
+
+---
+
 ### Cách 1: Chạy script tự động (Khuyến nghị)
 
 Mở **PowerShell** trong thư mục dự án và chạy:
@@ -35,10 +51,18 @@ Nếu script không chạy được, làm theo các bước sau:
 # 1. Khởi tạo Git
 git init
 
-# 2. Thêm remote
-git remote add origin https://github.com/lecongtoai0901/nh-m-7.git
+# 2. SỬA REMOTE URL (QUAN TRỌNG!)
+# Nếu remote đã tồn tại nhưng sai URL, sửa lại:
+git remote set-url origin https://github.com/lecongtoai0901/nh-m-7.git
 
-# 3. Tạo nhánh main và commit
+# Hoặc nếu chưa có remote:
+# git remote add origin https://github.com/lecongtoai0901/nh-m-7.git
+
+# Kiểm tra remote URL đã đúng chưa:
+git remote -v
+# Phải hiển thị: origin  https://github.com/lecongtoai0901/nh-m-7.git
+
+# 3. Tạo nhánh main và commit (nếu chưa có)
 git checkout -b main
 git add .
 git commit -m "Initial commit: Setup project structure"
@@ -298,23 +322,56 @@ git push origin feature/authentication
 
 ## 🆘 Troubleshooting
 
-### Lỗi: "Permission denied" khi push
-```bash
-# Kiểm tra xác thực GitHub
-git config --global user.name "Your Name"
-git config --global user.email "your.email@example.com"
+### ⚠️ LỖI QUAN TRỌNG: "Permission denied" hoặc "403 Forbidden"
+
+**Nguyên nhân**: Remote URL đang trỏ sai repository (ví dụ: `Zyuuki-i/PHP-Projects.git` thay vì `lecongtoai0901/nh-m-7.git`)
+
+**Giải pháp**:
+```powershell
+# 1. Kiểm tra remote URL hiện tại
+git remote -v
+
+# 2. Sửa remote URL về đúng repository
+git remote set-url origin https://github.com/lecongtoai0901/nh-m-7.git
+
+# 3. Kiểm tra lại
+git remote -v
+# Phải hiển thị: origin  https://github.com/lecongtoai0901/nh-m-7.git
+
+# 4. Push lại các branches
+git checkout main
+git push -u origin main
+
+# 5. Push các feature branches
+git checkout feature/authentication
+git push -u origin feature/authentication
+
+# Lặp lại cho các branches khác...
 ```
 
 ### Lỗi: "remote origin already exists"
-```bash
+```powershell
+# Sửa URL thay vì thêm mới
 git remote set-url origin https://github.com/lecongtoai0901/nh-m-7.git
 ```
 
 ### Lỗi: "branch already exists"
-```bash
-# Xóa branch local
-git branch -D feature/tên-branch
-# Chạy lại script
+```powershell
+# Các branches đã tồn tại local, chỉ cần push lên
+git checkout feature/authentication
+git push -u origin feature/authentication
+```
+
+### Lỗi: "Permission denied" khi push (sau khi đã sửa remote)
+```powershell
+# 1. Kiểm tra xác thực GitHub
+git config --global user.name "lecongtoai0901"
+git config --global user.email "your-email@example.com"
+
+# 2. Nếu vẫn lỗi, có thể cần Personal Access Token
+# Tạo token tại: https://github.com/settings/tokens
+# Sau đó push với token:
+# git push https://[TOKEN]@github.com/lecongtoai0901/nh-m-7.git main
 ```
 
 ---
