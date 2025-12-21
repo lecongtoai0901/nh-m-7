@@ -42,6 +42,7 @@ $admin = $_SESSION['admin'];
                     <div class="col-12 text-center mb-4">
                         <img src="./resources/images/logo.png" alt="Logo" style="max-width:250px;">
                         <h3 class="mt-4">Xin chào Admin <?php echo htmlspecialchars($admin['tennv']); ?></h3>
+                        <p class="text-white-50">Chúc bạn 1 ngày tốt lành!</p>
                         <!-- commit test:-->
                     </div>
                     <div class="col-12">
