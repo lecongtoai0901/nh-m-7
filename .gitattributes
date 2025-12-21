@@ -1,0 +1,28 @@
+# Git attributes để xử lý line endings và encoding
+* text=auto
+
+# PHP files
+*.php text eol=lf
+*.php3 text eol=lf
+*.php4 text eol=lf
+*.php5 text eol=lf
+*.phtml text eol=lf
+
+# Config files
+*.json text
+*.yml text
+*.yaml text
+*.md text
+*.txt text
+
+# SQL files
+*.sql text
+
+# Ignore binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+

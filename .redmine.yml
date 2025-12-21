@@ -1,0 +1,33 @@
+# Redmine Integration Configuration
+# File này giúp tích hợp với Redmine để tracking issues
+
+# Redmine URL (thay bằng URL Redmine của bạn)
+redmine_url: "https://your-redmine-url.com"
+
+# Project identifier trong Redmine
+project_identifier: "nh-m-7"
+
+# Mapping giữa Git branches và Redmine trackers
+branch_trackers:
+  feature/authentication: "Feature"
+  feature/apartment-crud: "Feature"
+  feature/apartment-search: "Feature"
+  feature/database-setup: "Task"
+  feature/router-system: "Task"
+  feature/product-management: "Feature"
+  feature/cart-order: "Feature"
+  feature/user-management: "Feature"
+  bugfix/*: "Bug"
+
+# Commit message format
+# Sử dụng format: [#123] Mô tả thay đổi
+# Redmine sẽ tự động link commit với issue #123
+
+# Workflow
+workflow:
+  - Tạo issue trên Redmine
+  - Tạo branch từ issue: git checkout -b feature/issue-123
+  - Commit với message: git commit -m "[#123] Implement feature X"
+  - Push branch: git push origin feature/issue-123
+  - Redmine tự động cập nhật issue với commit info
+

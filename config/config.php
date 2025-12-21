@@ -7,9 +7,9 @@ $dotenv->safeLoad();
 
 $db = [
     'mysql' => [
-        'host' => $_ENV['MYSQL_HOST'] ?? '',
-        'dbname' => $_ENV['MYSQL_DB'] ?? '',
-        'user' => $_ENV['MYSQL_USER'] ?? '', 
+        'host' => $_ENV['MYSQL_HOST'] ?? 'localhost',
+        'dbname' => $_ENV['MYSQL_DB'] ?? 'apartment_manager',
+        'user' => $_ENV['MYSQL_USER'] ?? 'root', 
         'pass' => $_ENV['MYSQL_PASS'] ?? '',
         'charset' => 'utf8mb4',
     ],

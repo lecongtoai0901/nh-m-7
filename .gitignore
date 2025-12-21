@@ -1,2 +1,53 @@
-/.env
-/.htaccess
+# Dependencies
+/vendor/
+/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Debug files
+debug_path.php
+test_router.php
+*.debug.php
+
+# Git scripts (tạm thời, có thể xóa sau khi setup xong)
+# create_branches.ps1
+# setup_git_branches.sh
+
+# Database dumps (except SQL files in database folder)
+*.sql.bak
+*.dump
+
+# Uploads (if any)
+uploads/temp/
+temp/
+
+# Composer
+composer.lock
+
+# WAMP/XAMPP specific
+wamp/
+xampp/
