@@ -228,7 +228,8 @@ if ($debug) {
     echo "Method: " . $method . "\n\n";
     echo "Registered Routes:\n";
     $reflection = new ReflectionClass($router);
-    $routesProperty = $reflection->getProperty('routes');
+    $routes = $reflection->getProperty('routes')->getValue($router);
+   /**@noinspection PhpReflectionMethodAccessInspection*/
     $routesProperty->setAccessible(true);
     $routes = $routesProperty->getValue($router);
     foreach ($routes as $r) {
@@ -236,5 +237,6 @@ if ($debug) {
     }
     echo "</pre><hr>";
 }
+
 
 echo $router->dispatch($method, $path);
