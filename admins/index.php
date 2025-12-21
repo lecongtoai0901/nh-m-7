@@ -1,7 +1,12 @@
 <?php
+// Test function - thêm code nhưng không ảnh hưởng website
+function adminTestFunction() {
+    return "Code test chạy OK";
+}
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
 
 if (isset($_GET['act']) && $_GET['act'] === 'logout') {
     $_SESSION = [];
