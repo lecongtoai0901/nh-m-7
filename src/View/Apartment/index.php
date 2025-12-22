@@ -45,10 +45,16 @@ $baseUrl = $GLOBALS['baseUrl'] ?? '';
             </div>
 
             <form class="row g-2 mb-3" method="get" action="<?php echo $baseUrl; ?>/Apartments">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <input type="text" class="form-control" name="q" placeholder="Tìm theo tên, tòa nhà, chủ sở hữu..." value="<?php echo htmlspecialchars($search ?? ''); ?>">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
+                    <input type="number" class="form-control" name="min_price" placeholder="Giá tối thiểu" value="<?php echo htmlspecialchars($_GET['min_price'] ?? ''); ?>">
+                </div>
+                <div class="col-md-2">
+                    <input type="number" class="form-control" name="max_price" placeholder="Giá tối đa" value="<?php echo htmlspecialchars($_GET['max_price'] ?? ''); ?>">
+                </div>
+                <div class="col-md-2">
                     <select class="form-select" name="status">
                         <option value="">Tất cả trạng thái</option>
                         <option value="available" <?php echo ($status ?? '') === 'available' ? 'selected' : ''; ?>>Còn trống</option>
@@ -56,7 +62,7 @@ $baseUrl = $GLOBALS['baseUrl'] ?? '';
                         <option value="maintenance" <?php echo ($status ?? '') === 'maintenance' ? 'selected' : ''; ?>>Bảo trì</option>
                     </select>
                 </div>
-                <div class="col-md-3 d-flex gap-2">
+                <div class="col-md-2 d-flex gap-2">
                     <button class="btn btn-dark flex-grow-1" type="submit">Lọc</button>
                     <a class="btn btn-outline-secondary" href="<?php echo $baseUrl; ?>/Apartments">Reset</a>
                 </div>

@@ -55,6 +55,18 @@ class ApartmentController
             }));
         }
 
+        // Sorting
+        $sort = $_GET['sort'] ?? '';
+        if ($sort === 'price_asc') {
+            usort($apartments, fn($a, $b) => $a->price <=> $b->price);
+        } elseif ($sort === 'price_desc') {
+            usort($apartments, fn($a, $b) => $b->price <=> $a->price);
+        } elseif ($sort === 'area_asc') {
+            usort($apartments, fn($a, $b) => $a->area <=> $b->area);
+        } elseif ($sort === 'area_desc') {
+            usort($apartments, fn($a, $b) => $b->area <=> $a->area);
+        }
+
         $stats = [
             'total' => count($apartments),
             'available' => count(array_filter($apartments, fn($a) => $a->status === 'available')),
