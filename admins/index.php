@@ -3,19 +3,20 @@
 function adminTestFunction() {
     return "Code test chạy OK";
 }
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-
+// Xử lý đăng xuất
 if (isset($_GET['act']) && $_GET['act'] === 'logout') {
     $_SESSION = [];
-    unset($admin);
     session_destroy();
     header('Location: login.php');
     exit();
 }
 
+// Chưa đăng nhập → chuyển về login
 if (!isset($_SESSION['admin'])) {
     header('Location: login.php');
     exit();
@@ -27,58 +28,88 @@ $admin = $_SESSION['admin'];
 <html lang="vi">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin Dashboard</title>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Icons & Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./resources/css/style.css">
 </head>
 <body>
     <div class="container" style="height: 100vh;">
         <div class="row justify-content-center h-100">
+
+            <!-- Sidebar -->
             <div class="col-3 bg-admin text-white p-4 my-1 shadow rounded-3">
-                <div class="row">
-                    <div class="col-12 text-center mb-4">
-                        <img src="./resources/images/logo.png" alt="Logo" style="max-width:250px;">
-                        <h3 class="mt-4">Xin chào Admin <?php echo htmlspecialchars($admin['tennv']); ?></h3>
-                        <p class="text-white-50">Chúc bạn 1 ngày tốt lành!</p>
-                        <!-- commit test:-->
-                    </div>
-                    <div class="col-12">
-                        <ul class="nav flex-column">
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="index.php"><i class="bi bi-speedometer2 me-2"></i>Bảng điều khiển</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="#"><i class="bi bi-box-seam me-2"></i>Quản lý sản phẩm</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="#"><i class="bi bi-file-earmark-text me-2"></i>Quản lý loại sản phẩm</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="#"><i class="bi bi-file-earmark-text me-2"></i>Quản lý nhà sản xuất</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="#"><i class="bi bi-file-earmark-text me-2"></i>Quản lý đơn đặt hàng</a>
-                            </li>
-                            <li class="nav-item mb-2">
-                                <a class="nav-link text-white" href="#"><i class="bi bi-people me-2"></i>Quản lý người dùng</a>
-                            </li>
-                            <li class="nav-item mt-4">
-                                <a class="nav-link text-white" href="index.php?act=logout"><i class="bi bi-box-arrow-right me-2"></i>Đăng xuất</a>
-                            </li>
-                            <li class="nav-item mb-2">
-    <a class="nav-link text-white" href="#"><i class="bi bi-gear me-2"></i>Cài đặt hệ thống</a>
-</li>
-                        </ul>
-                    </div>
+                <div class="text-center mb-4">
+                    <img src="./resources/images/logo.png" alt="Logo" style="max-width:250px;">
+                    <h3 class="mt-4">Xin chào Admin <?php echo htmlspecialchars($admin['tennv']); ?></h3>
+                    <p class="text-white-50">Chúc bạn một ngày tốt lành!</p>
                 </div>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="index.php">
+                            <i class="bi bi-speedometer2 me-2"></i>Bảng điều khiển
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-box-seam me-2"></i>Quản lý sản phẩm
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-file-earmark-text me-2"></i>Quản lý loại sản phẩm
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-file-earmark-text me-2"></i>Quản lý nhà sản xuất
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-file-earmark-text me-2"></i>Quản lý đơn đặt hàng
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-people me-2"></i>Quản lý người dùng
+                        </a>
+                    </li>
+
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="bi bi-gear me-2"></i>Cài đặt hệ thống
+                        </a>
+                    </li>
+
+                    <li class="nav-item mt-4">
+                        <a class="nav-link text-white" href="index.php?act=logout">
+                            <i class="bi bi-box-arrow-right me-2"></i>Đăng xuất
+                        </a>
+                    </li>
+                </ul>
             </div>
+
+            <!-- Content -->
             <div style="width: 10px;"></div>
             <div class="col-8 bg-admin text-white p-4 my-1 shadow rounded-3">
-                <p class="m-auto">Đây là trang quản trị.</p>
+                <p>Đây là trang quản trị.</p>
             </div>
+
         </div>
     </div>
 </body>
