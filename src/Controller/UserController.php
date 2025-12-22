@@ -2,10 +2,6 @@
 namespace App\Controller;
 
 use App\Model\NguoiDung;
-use App\Model\DonDatHang;
-use App\Model\Product;
-use App\Model\Hinh;
-use App\Model\DanhGia;
 require_once __DIR__ . '/../../include/function.php';
 
 global $pdo;
@@ -139,50 +135,8 @@ class UserController
             header('Location: ' . ($GLOBALS['baseUrl'] ?? '/') . '/');
             exit;
         }
-        try {
-            $sql = "SELECT DISTINCT c.ma_sp
-                    FROM chi_tiet_don_dat_hang c
-                    JOIN don_dat_hang d ON c.ma_ddh = d.ma_ddh
-                    LEFT JOIN danh_gia g ON g.ma_sp = c.ma_sp AND g.ma_nd = :ma_nd
-                    WHERE d.ma_nd = :ma_nd AND g.ma_sp IS NULL";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['ma_nd' => $nguoidung->ma_nd]);
-            $dgia = [];
-            while ($row = $stmt->fetch()) {
-                $prod = Product::getById($pdo, $row['ma_sp']);
-                if ($prod) {
-                    $images = Hinh::getByProductId($pdo, $prod->ma_sp);
-                    $img = $images[0]->tenhinh ?? null;
-                    $dgia[] = ['product' => $prod, 'image' => $img];
-                }
-            }
-        } catch (\Exception $e) {
-            $dgia = [];
-        }
 
-        try {
-            $sql = "SELECT DISTINCT c.ma_sp
-                    FROM chi_tiet_don_dat_hang c
-                    JOIN don_dat_hang d ON c.ma_ddh = d.ma_ddh
-                    LEFT JOIN danh_gia g ON g.ma_sp = c.ma_sp AND g.ma_nd = :ma_nd
-                    WHERE d.ma_nd = :ma_nd AND g.ma_sp IS NOT NULL";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute(['ma_nd' => $nguoidung->ma_nd]);
-            $dadanhgia = [];
-            while ($row = $stmt->fetch()) {
-                $prod = Product::getById($pdo, $row['ma_sp']);
-                if ($prod) {
-                    $images = Hinh::getByProductId($pdo, $prod->ma_sp);
-                    $danhg = DanhGia::getByUserAndProduct($pdo, $nguoidung->ma_nd, $prod->ma_sp);
-                    $img = $images[0]->tenhinh ?? null;
-                    $dadanhgia[] = ['product' => $prod, 'danhgia' => $danhg, 'image' => $img];
-                }
-            }
-        } catch (\Exception $e) {
-            $dadanhgia = [];
-        }
-
-        $content = $this->view('thongtin.php', ['nguoidung' => $nguoidung, 'canDanhGia' => $dgia, 'daDanhGia' => $dadanhgia]);
+        $content = $this->view('thongtin.php', ['nguoidung' => $nguoidung]);
         return $this->render('main_layout.php', ['content' => $content]);
     }
 
@@ -311,51 +265,6 @@ class UserController
         exit;
     }
 
-    public function danhGiaSP()
-    {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $pdo = require __DIR__ . '/../../config/config.php';
-        $user = $_SESSION['user'] ?? null;
-        if (!$user) {
-            header('Location: ' . ($GLOBALS['baseUrl'] ?? '/') . '/');
-            exit;
-        }
-
-        $ma_sp = $_POST['ma_sp'] ?? null;
-        $noidung = trim($_POST['noidung'] ?? '');
-        $sosao = (int)($_POST['sosao'] ?? 5);
-
-        if (!$ma_sp) {
-            header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
-            exit;
-        }
-
-        $check = $pdo->prepare('SELECT COUNT(*) FROM danh_gia WHERE ma_sp = :ma_sp AND ma_nd = :ma_nd');
-        $check->execute(['ma_sp' => $ma_sp, 'ma_nd' => $user['ma_nd']]);
-        if ((int)$check->fetchColumn() === 0) {
-            $ins = $pdo->prepare('INSERT INTO danh_gia (ma_nd, ma_sp, noidung, sosao) VALUES (:ma_nd, :ma_sp, :noidung, :sosao)');
-            $ins->execute(['ma_nd' => $user['ma_nd'], 'ma_sp' => $ma_sp, 'noidung' => $noidung, 'sosao' => $sosao]);
-        }
-
-        header('Location: ' . ($_SERVER['HTTP_REFERER'] ?? '/'));
-        exit;
-    }
-
-    public function lichSuDatHang()
-    {
-        if (session_status() === PHP_SESSION_NONE) session_start();
-        $pdo = require __DIR__ . '/../../config/config.php';
-        $user = $_SESSION['user'] ?? null;
-        if (!$user) {
-            header('Location: ' . ($GLOBALS['baseUrl'] ?? '/') . '/');
-            exit;
-        }
-
-        $donhangs = DonDatHang::getByNguoiDung($pdo, $user['ma_nd']);
-        
-        $content = $this->view('lichsuDDH.php', ['donhangs' => $donhangs]);
-        return $this->render('main_layout.php', ['content' => $content]);
-    }
 
 
     private function view($view, $data = [])
