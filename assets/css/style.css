@@ -208,7 +208,7 @@ footer a:hover {
 /* Cắt chữ nếu tên quá dài (giữ tối đa 2 dòng) */
 .text-clamp-2 {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 2; /*<-- bị lỗi đoạn này */
     -webkit-box-orient: vertical;
     overflow: hidden;
     height: 3em; /* Chiều cao cố định cho 2 dòng để các card bằng nhau */
