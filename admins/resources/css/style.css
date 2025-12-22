@@ -38,3 +38,11 @@ body {
     font-weight: 600;
     transform: translateX(3px);
 }
+/* ======= LOGO ======= */
+img.logo {
+    max-width: 180px;
+    transition: 0.3s;
+}
+img.logo:hover {
+    transform: scale(1.05);
+}
