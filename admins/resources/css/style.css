@@ -11,16 +11,17 @@ body {
     padding: 0;
     background-color: #e9f3f4;  /* nền sáng nhẹ cho trang admin */
 }
-.nav-link:hover {
-    background-color: #5aa9a4;
-    color: #000 !important;
+/* Điều chỉnh spacing tổng thể */
+.container-fluid,
+.container {
+    padding: 20px;
 }
-body{
-    font-family:Poppins,Arial,Helvetica,sans-serif;
-    margin:0;
-    padding:0;
-    background-color:#90abaf
-} 
-.container-fluid{
-    padding:20px
+
+/* ======= NAVIGATION ======= */
+.nav-link {
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 500;
+    color: #fff !important;
+    transition: all 0.25s ease;
 }
